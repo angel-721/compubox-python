@@ -16,11 +16,10 @@ def addCoach(hint):
     coach = coach.split(",")
     insertCoach(*coach)
 
-"""
-winner = true; red wins   winner = false; blue wins
-"""
 def addFight(hint):
-    if hint != 0: print("redFighterName,blueFighterName,winner")
+    if(hint != 0): print("red-fighter,blue-fighter,winner")
     fight = input("Input a fight: ")
     fight = fight.split(",")
-    insertFight(*fight)
+    if fight[2].lower() == "red": winner = True
+    else: winner = False
+    insertFight(fight[0],fight[1],winner)

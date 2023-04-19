@@ -13,7 +13,8 @@ def insertFighter(name, height, reach, wins, losses, draws, wasChampion, coachId
             id = 1
 
         cursor.execute("""
-        INSERT INTO Fighter (fighter_id, name, height, reach, wins, losses, draws, was_champion, coach_id)
+        INSERT INTO Fighter (fighter_id, name, height, 
+        reach, wins, losses, draws, was_champion, coach_id)
         VALUES(?,?,?,?,?,?,?,?, ?)
         """,(id, name, height, reach, wins, losses, draws, wasChampion,coachId))
         connection.commit()
@@ -61,7 +62,6 @@ def insertFight(redFighter, blueFighter, winner):
         SELECT fighter_id FROM Fighter WHERE name = ?;
         """,(redFighter,)).fetchall()
         redID = table[0][0]
-        print(redID)
     except:
         print(redFighter, "Does not exist")
         return
@@ -75,6 +75,7 @@ def insertFight(redFighter, blueFighter, winner):
         print(blueFighter, "Does not exist")
         return
 
+    winner = bool(winner)
     if winner:
         winnerId, loserId = redID, blueID
     else:
@@ -93,10 +94,17 @@ def insertFight(redFighter, blueFighter, winner):
         VALUES(?,?, ?)
         """,(id,winnerId, loserId))
         connection.commit()
+
+        cursor.execute(("""UPDATE Fighter SET wins = wins + 1 
+        WHERE fighter_id = ?"""),(winnerId,))
+        connection.commit()
+        cursor.execute(("""UPDATE Fighter SET losses = losses + 1 
+        WHERE fighter_id = ?"""),(loserId,))
+        connection.commit()
         print("Added Fight between", redFighter, "and", blueFighter)
+
     except Exception as e:
         print("Fight Table Does not exist", e)
     finally:
         connection.close()
     return
-
