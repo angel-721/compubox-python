@@ -15,3 +15,12 @@ def addCoach(hint):
     coach = input("Input a coach: ")
     coach = coach.split(",")
     insertCoach(*coach)
+
+"""
+winner = true; red wins   winner = false; blue wins
+"""
+def addFight(hint):
+    if hint != 0: print("redFighterName,blueFighterName,winner")
+    fight = input("Input a fight: ")
+    fight = fight.split(",")
+    insertFight(*fight)
