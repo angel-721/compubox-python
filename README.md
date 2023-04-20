@@ -4,7 +4,7 @@
 | -| -|
 |--add-fighter|name,height,reach,wins,losses,draws,wasChampion,coachID |
 |--add-coach|name|
-
+|--add-fight|blue-name,red-name, winner|
 
 ## to run the tests run these commands:
 - you can run all the tests bu runnung <code> make tests-all</code>
