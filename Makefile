@@ -10,3 +10,9 @@ add-fighter:
 
 add-coach:
 	cd ./src; python3 main.py --add-coach 1 --hint 1;
+
+add-fight:
+	cd ./src; python3 main.py --add-fight 1 --hint 1;
+	
+add-round:
+	cd ./src; python3 main.py --add-round 1 --hint 1;
