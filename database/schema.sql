@@ -8,7 +8,7 @@ CREATE TABLE
     losses INTEGER,
     draws INTEGER,
     was_champion BOOLEAN NOT NULL,
-    coach_id INTEGER NOT NULL,
+    coach_id INTEGER,
     FOREIGN KEY (coach_id) REFERENCES Coach (coach_id)
   );
 
@@ -37,7 +37,7 @@ CREATE TABLE
     winner_id INTEGER NOT NULL,
     loser_id INTEGER NOT NULL,
     FOREIGN KEY (winner_id) REFERENCES Fighter (fighter_id),
-    FOREIGN KEY (loser_id) REFERENCES Fighter (fighter_id)
+    FOREIGN KEY (loser_id) REFERENCES Fighter (fighter_id) ON DELETE CASCADE
   );
 
 CREATE TABLE
@@ -56,6 +56,6 @@ CREATE TABLE
     fighter_id INTEGER PRIMARY KEY NOT NULL,
     tournament_id INTEGER NOT NULL,
     title_belt_name TEXT NOT NULL,
-    FOREIGN KEY (fighter_id) REFERENCES Fighter (fighter_id),
+    FOREIGN KEY (fighter_id) REFERENCES Fighter (fighter_id) ON DELETE CASCADE,
     FOREIGN KEY (tournament_id) REFERENCES Tournament (tournament_id)
   );
