@@ -2,8 +2,8 @@
 import sqlite3
 
 
-def insertFighter(name, height, reach, wins, losses, draws, wasChampion, coachId):
-    connection = sqlite3.connect('../database/database.db')
+def insertFighter(name, height, reach, wins, losses, draws, wasChampion, coachId, test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
     try:
         cursor.execute("SELECT MAX(fighter_id) FROM Fighter")
@@ -29,8 +29,8 @@ def insertFighter(name, height, reach, wins, losses, draws, wasChampion, coachId
     return
 
 
-def insertCoach(name):
-    connection = sqlite3.connect('../database/database.db')
+def insertCoach(name, test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
     try:
         cursor.execute("SELECT MAX(coach_id) FROM Coach")
@@ -59,8 +59,8 @@ winner true then red wins, winner false then blue wins
 """
 
 
-def insertFight(redFighter, blueFighter, winner):
-    connection = sqlite3.connect('../database/database.db')
+def insertFight(redFighter, blueFighter, winner, test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
 
     try:
@@ -116,8 +116,8 @@ def insertFight(redFighter, blueFighter, winner):
     return
 
 
-def insertRound(fightId, redPunchCount, bluePunchCount):
-    connection = sqlite3.connect('../database/database.db')
+def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
     try:
         cursor.execute(
@@ -152,8 +152,8 @@ def insertRound(fightId, redPunchCount, bluePunchCount):
     return
 
 
-def selectFights():
-    connection = sqlite3.connect('../database/database.db')
+def selectFights(test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
     try:
         query = cursor.execute(

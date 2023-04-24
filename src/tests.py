@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import pytest
+import sqlite3
 import os.path
 import shutil
 import database as db
@@ -30,9 +31,9 @@ def describe_compubox():
     def describe_insertFight():
         def it_adds_new_fight_to_db(test_db):
             pass
-        def it_properly_raises_exceptiong_when_red_fighter_id_is_not_correct(test_db):
+        def it_properly_raises_exception_when_red_fighter_id_is_not_correct(test_db):
             pass
-        def it_properly_raises_exceptiong_when_blue_fighter_id_is_not_correct(test_db):
+        def it_properly_raises_exception_when_blue_fighter_id_is_not_correct(test_db):
             pass
         def it_increments_the_wins_of_the_winning_fighter(test_db):
             pass
