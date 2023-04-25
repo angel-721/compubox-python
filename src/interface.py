@@ -46,7 +46,7 @@ def addRound(hint):
 
 def addTournament(hint):
     if (hint != 0):
-        print("name,quarter1-id,quarter2-id,semiA-id,semiB-id,final-id")
+        print("name,semiA-id,semiB-id,final-id")
         selectFights()
     tournament = input("Input a tournament: ")
     tournament = tournament.split(",")

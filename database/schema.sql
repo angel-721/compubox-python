@@ -19,13 +19,9 @@ CREATE TABLE
   Tournament (
     tournament_id INTEGER PRIMARY KEY,
     tournament_name TEXT NOT NULL,
-    quarter_finals_a_id INTEGER NOT NULL,
-    quarter_finals_b_id INTEGER NOT NULL,
     semi_finals_a_id INTEGER NOT NULL,
     semi_finals_b_id INTEGER NOT NULL,
     final_fight_id INTEGER NOT NULL,
-    FOREIGN KEY (quarter_finals_a_id) REFERENCES Fight (fight_id),
-    FOREIGN KEY (quarter_finals_b_id) REFERENCES Fight (fight_id),
     FOREIGN KEY (semi_finals_a_id) REFERENCES Fight (fight_id),
     FOREIGN KEY (semi_finals_b_id) REFERENCES Fight (fight_id),
     FOREIGN KEY (final_fight_id) REFERENCES Fight (fight_id)
