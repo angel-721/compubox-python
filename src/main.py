@@ -13,6 +13,7 @@ def parseArgs():
     parser.add_argument("--add-coach", "-ac", type=int, default=0)
     parser.add_argument("--add-fight", "-af", type=int, default=0)
     parser.add_argument("--add-round", "-ar", type=int, default=0)
+    parser.add_argument("--add-tourney", "-at", type=int, default=0)
 
     # Test arguments here
 
@@ -32,6 +33,8 @@ def main(args):
 
     if (args.add_round != 0):
         addRound(args.hint)
+    if (args.add_tourney != 0):
+        addTournament(args.hint)
 
 
 if __name__ == "__main__":

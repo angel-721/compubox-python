@@ -25,6 +25,7 @@ def addCoach(hint):
 def addFight(hint):
     if (hint != 0):
         print("red-fighter,blue-fighter,winner")
+        selectFighters()
     fight = input("Input a fight: ")
     fight = fight.split(",")
     if fight[2].lower() == "red":
@@ -41,3 +42,12 @@ def addRound(hint):
     round = input("Input a round: ")
     round = round.split(",")
     insertRound(*round)
+
+
+def addTournament(hint):
+    if (hint != 0):
+        print("name,quarter1-id,quarter2-id,semiA-id,semiB-id,final-id")
+        selectFights()
+    tournament = input("Input a tournament: ")
+    tournament = tournament.split(",")
+    insertTournament(*tournament)
