@@ -25,3 +25,5 @@ populate:
 
 install:
 	pip install -r ./requirements.txt
+tests:
+	pytest -v -color=yes
