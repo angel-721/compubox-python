@@ -152,6 +152,42 @@ def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/dat
     return
 
 
+""" quarter, semi, and final are all fight_ids """
+
+
+def insertTournament(name, quarterA, quarterB,
+                     semiA, semiB, finalFight, test_db='../database/database.db'):
+
+    connection = sqlite3.connect(test_db)
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT MAX(tournament_id) FROM Tournament")
+        id = cursor.fetchone()[0]
+        if id is not None:
+            id = id + 1
+        else:
+            id = 1
+
+        cursor.execute("""
+        INSERT INTO Tournament (tournament_id, tournament_name,
+        quarter_finals_a_id, quarter_finals_b_id, 
+        semi_finals_a_id, semi_finals_b_id,
+        final_fight_id)
+        VALUES(?,?,?,?,?,?,?)
+        """, (id, name, quarterA, quarterB, semiA, semiB, finalFight))
+        connection.commit()
+        print("Added Tournament:", name, "to Tournament")
+    except Exception as e:
+        print("Tournament Table Does not exist", e)
+        return
+    finally:
+        connection.close()
+    return
+
+
+"""Basic SELECT functions are just helpers"""
+
+
 def selectFights(test_db='../database/database.db'):
     connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
@@ -159,10 +195,33 @@ def selectFights(test_db='../database/database.db'):
         query = cursor.execute(
             """SELECT * FROM FIGHT"""
         ).fetchall()
-        print(query)
+        # print(query)
+        print("Here is a list of fight ids: ")
+        for fight in query:
+            print(fight[0])
         connection.commit()
     except Exception as e:
         print("Fight Table Does not exist", e)
+        return
+    finally:
+        connection.close()
+    return
+
+
+def selectFighters(test_db='../database/database.db'):
+    connection = sqlite3.connect(test_db)
+    cursor = connection.cursor()
+    try:
+        query = cursor.execute(
+            """SELECT * FROM FIGHTER"""
+        ).fetchall()
+        # print(query)
+        print("Here is a list of fighters: ")
+        for fighter in query:
+            print(fighter[1])
+        connection.commit()
+    except Exception as e:
+        print("Fighter Table Does not exist", e)
         return
     finally:
         connection.close()
