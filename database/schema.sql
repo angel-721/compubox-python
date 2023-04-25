@@ -53,9 +53,9 @@ CREATE TABLE
 
 CREATE TABLE
   Champion (
-    fighter_id INTEGER PRIMARY KEY NOT NULL,
+    champion_id INTEGER PRIMARY KEY NOT NULL,
+    fighter_id INTEGER NOT NULL,
     tournament_id INTEGER NOT NULL,
-    title_belt_name TEXT NOT NULL,
     FOREIGN KEY (fighter_id) REFERENCES Fighter (fighter_id) ON DELETE CASCADE,
     FOREIGN KEY (tournament_id) REFERENCES Tournament (tournament_id)
   );
