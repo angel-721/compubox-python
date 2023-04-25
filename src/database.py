@@ -152,10 +152,10 @@ def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/dat
     return
 
 
-""" quarter, semi, and final are all fight_ids """
+"""  semi and final are all fight_ids """
 
 
-def insertTournament(name, quarterA, quarterB,
+def insertTournament(name,
                      semiA, semiB, finalFight,
                      test_db='../database/database.db'):
 
@@ -171,11 +171,10 @@ def insertTournament(name, quarterA, quarterB,
 
         cursor.execute("""
         INSERT INTO Tournament (tournament_id, tournament_name,
-        quarter_finals_a_id, quarter_finals_b_id, 
         semi_finals_a_id, semi_finals_b_id,
         final_fight_id)
-        VALUES(?,?,?,?,?,?,?)
-        """, (id, name, quarterA, quarterB, semiA, semiB, finalFight))
+        VALUES(?,?,?,?,?)
+        """, (id, name, semiA, semiB, finalFight))
         connection.commit()
         print("Added Tournament:", name, "to Tournament")
 

@@ -17,5 +17,8 @@ add-fight:
 add-round:
 	cd ./src; python3 main.py --add-round 1 --hint 1;
 
+add-tournament:
+	cd ./src; python3 main.py --add-tournament 1 --hint 1;
+
 install:
 	pip install -r ./requirements.txt
