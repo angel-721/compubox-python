@@ -184,7 +184,7 @@ def insertTournament(name,
         ).fetchall()
         champId = champ[0][1]
 
-        insertChampion(champId, id)
+        insertChampion(champId, id, cursor, connection)
 
         # Update Fighter Table to set the fighter to a champion
         cursor.execute(("""UPDATE Fighter SET was_champion = 1
@@ -200,10 +200,7 @@ def insertTournament(name,
 
 
 def insertChampion(fighterId, tournamentId,
-                   test_db='../database/database.db'):
-
-    connection = sqlite3.connect(test_db)
-    cursor = connection.cursor()
+                   cursor, connection):
     try:
         cursor.execute("SELECT MAX(champion_id) FROM Champion")
         id = cursor.fetchone()[0]
@@ -222,8 +219,6 @@ def insertChampion(fighterId, tournamentId,
     except Exception as e:
         print("Champion Table Does not exist", e)
         return
-    finally:
-        connection.close()
     return
 
 
