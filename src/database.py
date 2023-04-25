@@ -121,7 +121,7 @@ def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/dat
     cursor = connection.cursor()
     try:
         cursor.execute(
-            """SELECT MAX(round_number) FROM Round WHERE fight_id = ?""",
+            """SELECT MAX(round_number) FROM Round WHERE fight_id = ?;""",
             (fightId,)
         )
         roundNum = cursor.fetchone()[0]
@@ -156,7 +156,8 @@ def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/dat
 
 
 def insertTournament(name, quarterA, quarterB,
-                     semiA, semiB, finalFight, test_db='../database/database.db'):
+                     semiA, semiB, finalFight,
+                     test_db='../database/database.db'):
 
     connection = sqlite3.connect(test_db)
     cursor = connection.cursor()
@@ -177,8 +178,50 @@ def insertTournament(name, quarterA, quarterB,
         """, (id, name, quarterA, quarterB, semiA, semiB, finalFight))
         connection.commit()
         print("Added Tournament:", name, "to Tournament")
+
+        # Add the winner of the final fight to the champion table
+        champ = cursor.execute(
+            """SELECT * FROM Fight WHERE fight_id = ?;""", (finalFight)
+        ).fetchall()
+        champId = champ[0][1]
+
+        insertChampion(champId, id)
+
+        # Update Fighter Table to set the fighter to a champion
+        cursor.execute(("""UPDATE Fighter SET was_champion = 1
+        WHERE fighter_id = ?"""), (champId,))
+        connection.commit()
+
     except Exception as e:
         print("Tournament Table Does not exist", e)
+        return
+    finally:
+        connection.close()
+    return
+
+
+def insertChampion(fighterId, tournamentId,
+                   test_db='../database/database.db'):
+
+    connection = sqlite3.connect(test_db)
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT MAX(champion_id) FROM Champion")
+        id = cursor.fetchone()[0]
+        if id is not None:
+            id = id + 1
+        else:
+            id = 1
+
+        cursor.execute("""
+        INSERT INTO Champion (champion_id, fighter_id,
+        tournament_id) 
+        VALUES(?,?,?)
+        """, (id, fighterId, tournamentId))
+        connection.commit()
+        print("Added Champion:", fighterId, "to Champion")
+    except Exception as e:
+        print("Champion Table Does not exist", e)
         return
     finally:
         connection.close()
