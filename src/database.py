@@ -279,10 +279,16 @@ def getRobbed(test_db="../database/database.db"):
         query = cursor.execute(
             """
             SELECT f.name, 
-            SUM(CASE WHEN r.punches_winner_landed > r.punches_loser_landed 
-            THEN r.punches_winner_landed ELSE 0 END) AS total_punches_landed,
-            SUM(CASE WHEN r.punches_winner_landed < r.punches_loser_landed 
-            THEN r.punches_winner_landed ELSE 0 END) AS total_punches_received
+            SUM(
+                CASE WHEN 
+                    r.punches_winner_landed > r.punches_loser_landed 
+                    THEN r.punches_winner_landed 
+                    ELSE 0 END) AS total_punches_landed,
+            SUM(
+                CASE WHEN 
+                r.punches_winner_landed < r.punches_loser_landed 
+                THEN r.punches_winner_landed 
+                ELSE 0 END) AS total_punches_received
             FROM Fighter f
             JOIN Fight fi ON f.fighter_id = fi.loser_id
             JOIN Round r ON fi.fight_id = r.fight_id
@@ -294,7 +300,7 @@ def getRobbed(test_db="../database/database.db"):
         print("Here is a list of fighters that got robbed: ")
         for fighter in query:
             print(fighter[0], "Landed", fighter[1] -
-                  fighter[2], "punches than the robber")
+                  fighter[2], "punches more than the robber")
         connection.commit()
     except Exception as e:
         print(e)

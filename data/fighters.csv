@@ -1,15 +1,12 @@
 name,height,reach,wins,losses,draws,was_champion,coach_id
-John Smith,180,185,25,10,2,Yes,1
-Emily Johnson,165,170,18,5,3,No,2
-Mike Davis,190,200,12,3,1,No,3
-Sarah Lee,175,180,9,2,0,No,4
-David Kim,172,175,15,8,2,No,5
-John Doe,185,190,20,12,3,No,6
-Anna Nguyen,160,165,14,6,1,No,7
-Chris Johnson,178,183,32,5,2,Yes,8
-Lisa Wong,170,175,11,3,0,No,9
-Ryan Kim,182,187,17,9,4,No,10
-Mike Hunter,182,187,17,9,4,No,10
 Tyson Fury,182,187,17,9,4,No,10
 Andy Ruiz,182,187,17,9,4,No,11
-Angel Velasquez,162,170,40,0,0,No,11
+Angel Velasquez,162,170,40,0,0,No,12
+Kawhi Leonard,220,230,10,1,0,No,2
+Creed,190,210,20,2,1,Yes,1
+Dillon Brooks,180,200,20,10,1,No,6
+Draymond Green,200,210,1,0,1,No,5
+Devin Haney,190,200,30,0,0,Yes,8
+Richard Stallman,170,180,100,0,0,Yes,9
+Linus Torvalds,170,175,100,0,1,Yes,7
+Elon Musk,180,120,20,0,1,No,3
