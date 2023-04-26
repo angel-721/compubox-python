@@ -139,7 +139,7 @@ def insertRound(fightId, redPunchCount, bluePunchCount, test_db='../database/dat
 
         cursor.execute("""
         INSERT INTO Round (round_id, round_number, fight_id,
-        punches_r_landed, punches_b_landed)
+        punches_winner_landed, punches_loser_landed)
         VALUES(?,?,?,?,?)
         """, (id, roundNum, fightId, redPunchCount, bluePunchCount))
         connection.commit()
@@ -180,8 +180,9 @@ def insertTournament(name,
 
         # Add the winner of the final fight to the champion table
         champ = cursor.execute(
-            """SELECT * FROM Fight WHERE fight_id = ?;""", (finalFight)
+            """SELECT * FROM Fight WHERE fight_id = ?;""", (finalFight,)
         ).fetchall()
+        # print(champ)
         champId = champ[0][1]
 
         insertChampion(champId, id)

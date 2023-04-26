@@ -37,7 +37,7 @@ def addFight(hint):
 
 def addRound(hint):
     if (hint != 0):
-        print("fight-id,red-punch-count,blue-punch-count")
+        print("fight-id,winner-punch-count,loser-punch-count")
         selectFights()
     round = input("Input a round: ")
     round = round.split(",")
