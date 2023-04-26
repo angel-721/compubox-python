@@ -264,3 +264,98 @@ def selectFighters(test_db='../database/database.db'):
     finally:
         connection.close()
     return
+
+
+""" INTERESTING STUFF """
+
+
+def getRobbed(test_db="../database/database.db"):
+    connection = sqlite3.connect(test_db)
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            """CREATE INDEX IF NOT EXISTS round_fight_idx ON Round (fight_id);"""
+        )
+        query = cursor.execute(
+            """
+            SELECT f.name, 
+            SUM(CASE WHEN r.punches_winner_landed > r.punches_loser_landed 
+            THEN r.punches_winner_landed ELSE 0 END) AS total_punches_landed,
+            SUM(CASE WHEN r.punches_winner_landed < r.punches_loser_landed 
+            THEN r.punches_winner_landed ELSE 0 END) AS total_punches_received
+            FROM Fighter f
+            JOIN Fight fi ON f.fighter_id = fi.loser_id
+            JOIN Round r ON fi.fight_id = r.fight_id
+            GROUP BY f.fighter_id
+            HAVING total_punches_landed > total_punches_received;
+            """
+        ).fetchall()
+        # print(query)
+        print("Here is a list of fighters that got robbed: ")
+        for fighter in query:
+            print(fighter[0], "Landed", fighter[1] -
+                  fighter[2], "punches than the robber")
+        connection.commit()
+    except Exception as e:
+        print(e)
+        return
+    finally:
+        connection.close()
+    return
+
+
+def getWorstCoaches(test_db="../database/database.db"):
+    connection = sqlite3.connect(test_db)
+    cursor = connection.cursor()
+    try:
+        query = cursor.execute(
+            """
+            SELECT
+            Coach.name AS coach_name,
+            Fighter.name AS fighter_name,
+            SUM(
+                CASE WHEN 
+                    Fight.winner_id = Fighter.fighter_id THEN Round.punches_winner_landed 
+                    ELSE Round.punches_loser_landed END) AS punches_landed,
+            SUM(
+                CASE WHEN Fight.winner_id = Fighter.fighter_id THEN Round.punches_loser_landed 
+                ELSE Round.punches_winner_landed END) AS punches_taken,
+            CAST(SUM(
+                CASE WHEN Fight.winner_id = Fighter.fighter_id THEN Round.punches_winner_landed 
+                ELSE Round.punches_loser_landed END) AS FLOAT) 
+            / SUM(
+                CASE WHEN Fight.winner_id = Fighter.fighter_id THEN Round.punches_loser_landed 
+                ELSE Round.punches_winner_landed END) AS punches_ratio
+            FROM
+            Coach
+            JOIN Fighter ON Fighter.coach_id = Coach.coach_id
+            JOIN Fight ON Fight.winner_id = Fighter.fighter_id OR Fight.loser_id = Fighter.fighter_id
+            JOIN Round ON Fight.fight_id = Round.fight_id
+            GROUP BY
+            Coach.name,
+            Fighter.name
+            HAVING
+            SUM(
+                CASE WHEN Fight.winner_id = Fighter.fighter_id THEN Round.punches_loser_landed 
+                ELSE Round.punches_winner_landed END) > 
+                SUM(
+                    CASE WHEN Fight.winner_id = Fighter.fighter_id THEN Round.punches_winner_landed 
+                    ELSE Round.punches_loser_landed END)
+            ORDER BY
+            punches_ratio ASC;
+
+            """
+        ).fetchall()
+        print("Here is a list of the worst coaches: ")
+        for fighter in query:
+            print("Coach", fighter[0], "Taught",
+                  fighter[1], "to get hit",
+                  fighter[3] - fighter[2], "more times than they hit others. This is a ratio of",
+                  fighter[4])
+        connection.commit()
+    except Exception as e:
+        print(e)
+        return
+    finally:
+        connection.close()
+    return
