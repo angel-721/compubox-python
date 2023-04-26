@@ -7,6 +7,8 @@
 |--add-fight|blue-name,red-name, winner|
 |--add-round|fight-id,red-punch-count, blue-punch-count|
 |--add-tournament|name,semiA,semiB,final-fight|
+|--populate|populate database|
+|--interesting|make things interesting|
 
 ## to run the tests run these commands:
 - you can run all the tests bu running <code> make tests-all</code>

@@ -23,5 +23,8 @@ add-tournament:
 populate:
 	cd ./src; python3 main.py -p 1;
 
+interesting:
+	cd ./src; python3 main.py -i 1;
+
 install:
 	pip install -r ./requirements.txt
