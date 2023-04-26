@@ -41,8 +41,8 @@ CREATE TABLE
     round_id INTEGER PRIMARY KEY,
     round_number INTEGER NOT NULL,
     fight_id INTEGER NOT NULL,
-    punches_r_landed INTEGER NOT NULL,
-    punches_b_landed INTEGER NOT NULL,
+    punches_winner_landed INTEGER NOT NULL,
+    punches_loser_landed INTEGER NOT NULL,
     FOREIGN KEY (fight_id) REFERENCES Fight (fight_id),
     CHECK (round_number BETWEEN 1 AND 8)
   );

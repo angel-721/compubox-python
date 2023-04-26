@@ -20,5 +20,8 @@ add-round:
 add-tournament:
 	cd ./src; python3 main.py --add-tournament 1 --hint 1;
 
+populate:
+	cd ./src; python3 main.py -p 1;
+
 install:
 	pip install -r ./requirements.txt

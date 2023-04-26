@@ -2,6 +2,7 @@
 import argparse
 
 from interface import *
+from populate import *
 # from test import *
 
 
@@ -14,6 +15,7 @@ def parseArgs():
     parser.add_argument("--add-fight", "-af", type=int, default=0)
     parser.add_argument("--add-round", "-ar", type=int, default=0)
     parser.add_argument("--add-tournament", "-at", type=int, default=0)
+    parser.add_argument("--populate", "-p", type=int, default=0)
 
     # Test arguments here
 
@@ -33,8 +35,16 @@ def main(args):
 
     if (args.add_round != 0):
         addRound(args.hint)
+
     if (args.add_tournament != 0):
         addTournament(args.hint)
+
+    if (args.populate != 0):
+        populateFighters("../data/fighters.csv")
+        populateCoaches("../data/coach.csv")
+        populateFights("../data/fight.csv")
+        populateRounds("../data/rounds.csv")
+        populateTournaments("../data/tournament.csv")
 
 
 if __name__ == "__main__":
